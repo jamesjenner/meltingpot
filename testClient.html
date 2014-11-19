@@ -1,0 +1,154 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Untitled Document</title>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      line-height: 2;
+      text-align: left;
+
+    }
+    th {
+      background-color: grey;
+      color: white;
+    }
+    table, td, th {
+      padding: 5px;
+      border: 2px solid white;
+    }
+    td {
+      background-color: lightgrey;
+      color: black;
+    }
+  </style>
+</head>
+<body>
+  <h1>Test Comms</h1>
+  <div>
+    <form>
+      <button id="addPanel">
+        Add Panel
+      </button>
+      <button id="retreivePanels">
+        Retreive Panels
+      </button>
+    </form>
+  </div>
+
+  <div>
+    <h3>Response</h3>
+    <div id="response">
+      <table >
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="responseTableBody">
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script src="./node_modules/node-uuid/uuid.js"></script>
+  <script src="./shared/message.js"></script>
+  <script src="./shared/panel.js"></script>
+  <script src="./server.js"></script>
+  <script>
+    
+    $("#addPanel").on("click", addPanel);
+    $("#retreivePanels").on("click", retreivePanels);
+    
+    var server = new Server({
+      messageHandlers: [
+        processPanelMessages,
+      ]
+    });
+    
+    server.connect();
+    
+    function processPanelMessages(server, id, content) {
+      var processed = false;
+        
+      switch (id) {
+      case Panel.MESSAGE_PANELS:
+        rcvdPanels(server, content);
+        processed = true;
+        break;
+
+      case Panel.MESSAGE_ADD_PANEL:
+        rcvdAddPanel(server, new Panel(content));
+        processed = true;
+        break;
+
+      case Panel.MESSAGE_DELETE_PANEL:
+        rcvdDeletePanel(server, new Panel(content));
+        processed = true;
+        break;
+
+      case Panel.MESSAGE_UPDATE_PANEL:
+        rcvdUpdatePanel(server, new Panel(content));
+        processed = true;
+        break;
+      }
+        
+      return processed;
+    }
+        
+    function addPanel() {
+      server.sendMessage(Panel.MESSAGE_ADD_PANEL, new Panel());
+      return false;
+    }
+
+    function deletePanel() {
+      var panel = new Panel({id: $(this).attr('data-id')});
+      server.sendMessage(Panel.MESSAGE_DELETE_PANEL, panel);
+      
+      return false;
+    }
+    
+    function retreivePanels() {
+      server.sendMessage(Panel.MESSAGE_GET_PANELS);
+      return false;
+    }
+
+    function rcvdAddPanel(server, d) {
+      addPanelToTable(d);
+    }
+    
+    function rcvdPanels(server, d) {
+      $(".panelRow").remove();
+      
+      for (var i in d) {
+        addPanelToTable(new Panel(d[i]));
+      }
+    }
+    
+    function rcvdDeletePanel(server, d) {
+      $("#row" + d.id).remove();
+    }
+    
+    function addPanelToTable(panel) {
+      $("#responseTableBody").append(
+          '<tr id="row' + panel.id + '" class="panelRow">' +
+          '  <td>' + panel.id + '</td>' +
+          '  <td>' + panel.name + '</td>' +
+          '  <td>' +
+          '    <button id="deleteBtn' + panel.id + '" class="deletePanel" data-id="' + panel.id + '">' +
+          '      Delete Panel' +
+          '    </button>' +
+          '  </td>' +
+          '</tr>' +
+        ''
+      );
+      $("#deleteBtn" + panel.id).on("click", deletePanel);
+    }
+    
+  </script>
+</body>
+</html>
