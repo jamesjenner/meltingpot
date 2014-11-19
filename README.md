@@ -1,11 +1,14 @@
 ##The Melting Pot version 0.1
-An application with the following components:
+An application template with the following components:
 
 * html based front end
 * node.js back end
 * websockets as the communication channel between font and back end
 
-The intention is to allow extensibility so that the backend can be remote or local, however the default is local.
+The purpose is to allow rapid development of a web based client, utilising encapsulated protocol 
+extensions to remove the pain of a typical thin client / websocket style application. This allows 
+the developer to focus on the front end design and back end logic without worrying about 
+communications and the framework to support the server.
 
 ##Features
 
