@@ -1,3 +1,4 @@
 node_modules/
 *.json
 !bower.json
+!package.json
