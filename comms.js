@@ -1,5 +1,4 @@
-/*jlint node: true */
-/*global require, console, module, __dirname, process */
+/*jshint node: true */
 /*
  * comms.js
  *
