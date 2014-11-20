@@ -14,13 +14,15 @@
   "license": "MIT",
   "ignore": [
     "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests",
+    "Gruntfile.js",
     "application.js",
+    "bower_components",
     "comms.js",
+    "node_modules",
+    "package.json",
     "panelHandler.js",
     "shared/panel.js",
+    "test",
+    "tests",
   ]
 }
