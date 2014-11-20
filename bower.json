@@ -23,6 +23,6 @@
     "panelHandler.js",
     "shared/panel.js",
     "test",
-    "tests",
+    "tests"
   ]
 }
