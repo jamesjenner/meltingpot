@@ -1,5 +1,6 @@
 *.json
 shared/panel.js
+test*
 .gitignore
 Gruntfile.js
 server.js
