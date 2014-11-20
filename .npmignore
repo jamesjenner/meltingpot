@@ -1,0 +1,6 @@
+*.json
+shared/panel.js
+.gitignore
+Gruntfile.js
+server.js
+testClient.html
