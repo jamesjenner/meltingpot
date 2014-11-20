@@ -1,9 +1,9 @@
 {
   "name": "meltingpot",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "homepage": "https://github.com/jamesjenner/meltingpot",
   "authors": [
-    "james-jenner <james.jenner@ventyx.abb.com>"
+    "james-jenner <james.g.jenner@gmail.com>"
   ],
   "description": "HTML based application, websockets for comms and node.js for backend",
   "keywords": [
