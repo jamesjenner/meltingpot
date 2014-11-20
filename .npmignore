@@ -2,6 +2,9 @@
 shared/panel.js
 test*
 .gitignore
+.npmignore
 Gruntfile.js
+application.js
+panelHandler.js
 server.js
 testClient.html
