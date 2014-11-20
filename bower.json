@@ -1,0 +1,26 @@
+{
+  "name": "meltingpot",
+  "version": "0.0.1",
+  "homepage": "https://github.com/jamesjenner/meltingpot",
+  "authors": [
+    "james-jenner <james.jenner@ventyx.abb.com>"
+  ],
+  "description": "HTML based application, websockets for comms and node.js for backend",
+  "keywords": [
+    "application",
+    "websocket",
+    "node"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "application.js",
+    "comms.js",
+    "panelHandler.js",
+    "shared/panel.js",
+  ]
+}
