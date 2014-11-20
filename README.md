@@ -16,12 +16,17 @@ communications and the framework to support the server.
 * all comms is pure websockets
 * extensible modular message protocol, allowing encapuslation of message logic on a per entity basis
 
+##Quick Start
+
+- Clone the repository: `git clone https://github.com/jamesjenner/meltingpot.git`
+- Install client dependancies via [Bower](http://bower.io): `bower install meltingpot`
+- Install server via [NPM](http://www.npmjs.org/): `npm install meltingpot`
+
 ##Usage
 
-Use the git repository as a template for a new application, only fork this project if you wish to adapt the template. 
-To use the repository as a template then you must download and create your own repository (or not, as you wish).
+Use the git repository as a template for a new application you can either clone the respository or install the client via bower and the server via npm (see quick start). 
 
-To extend look at the shared/panel.js and panelHandler.js examples.
+To extend the protocol refer to `shared/panel.js` and `panelHandler.js` examples. The `testClient.html` will run in a cloned environment, utilising the panel extension example.  
 
 ##Key Components
 
