@@ -19,7 +19,7 @@
     "bower_components",
     "comms.js",
     "node_modules",
-    "package.json",
+    "*.json",
     "panelHandler.js",
     "shared/panel.js",
     "test",
