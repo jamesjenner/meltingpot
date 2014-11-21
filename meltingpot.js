@@ -23,7 +23,5 @@
  * SOFTWARE.
  */
 
-exports.Comms = require('comms.js');
-exports.Message = require('shared/message.js');
-
-
+exports.Comms = require('./comms.js');
+exports.Message = require('./shared/message.js');
