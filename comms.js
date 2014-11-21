@@ -41,7 +41,6 @@ if(process.platform === 'win32') {
 }
 
 var Message = require('./shared/message.js');
-var Panel = require('./shared/panel.js');
 
 var USERS_FILE = 'users.json';
 var users = null;
