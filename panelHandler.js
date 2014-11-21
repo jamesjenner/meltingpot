@@ -24,10 +24,12 @@
  * SOFTWARE.
  */
 
-var Panel = require('./shared/panel.js');
-var Message = require('./shared/message.js');
-var Comms = require('./comms.js');
 var fs = require('fs');
+
+var MeltingPot = require('meltingpot');
+var Message = MeltingPot.Message;
+
+var Panel = require('./shared/panel.js');
 
 module.exports = PanelHandler;
 
@@ -167,7 +169,7 @@ PanelHandler.prototype._save = function() {
 };
 
 PanelHandler.prototype.setupCommsListeners = function(comms) {
-  comms.on(Comms.NEW_CONNECTION_ACCEPTED, function (c) {
+  comms.on(MeltingPot.Comms.NEW_CONNECTION_ACCEPTED, function (c) {
     comms.sendMessage(c, Panel.MESSAGE_PANELS, this.panels);
   }.bind(this));
   

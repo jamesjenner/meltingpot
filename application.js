@@ -28,9 +28,10 @@ var path = require('path');
 var opt = require('opt').create();
 var fs = require('fs');
 
-var Message = require('./shared/message.js');
+var MeltingPot = require('meltingpot');
+var Message = MeltingPot.Message;
+var Comms = MeltingPot.Comms;
 
-var Comms = require('./comms.js');
 var PanelHandler = require('./panelHandler.js');
 
 //var VEHICLES_FILE = 'vehicles.json';
@@ -75,7 +76,7 @@ var config = {
   port: 9007,
   securePort: 9008,
   uuidV1: false,
-  communicationType: Message.COMMS_TYPE_UNSECURE_ONLY,
+  communicationType: MeltingPot.Message.COMMS_TYPE_UNSECURE_ONLY,
   sslKey: 'keys/privatekey.pem',
   sslCert: 'keys/certificate.pem',
   autoDiscover: false,
@@ -111,15 +112,15 @@ opt.option(["-d", "--debug"], function (param) {
 }, "Generate debugging messages, level is optional. 0 - informational, 1 - detailed");
 
 opt.option(["-so", "--secure-only"], function (param) {
-  config.communicationType = Message.COMMS_TYPE_SECURE_ONLY;
+  config.communicationType = MeltingPot.Message.COMMS_TYPE_SECURE_ONLY;
 }, "Set communications to only accept secure connections");
 
 opt.option(["-uo", "--unsecure-only"], function (param) {
-  config.communicationType = Message.COMMS_TYPE_UNSECURE_ONLY;
+  config.communicationType = MeltingPot.Message.COMMS_TYPE_UNSECURE_ONLY;
 }, "Set communications to only accept unsecure connections, this is the default type");
 
 opt.option(["-m", "--mixed"], function (param) {
-  config.communicationType = Message.COMMS_TYPE_MIXED;
+  config.communicationType = MeltingPot.Message.COMMS_TYPE_MIXED;
 }, "Set communications to accept secure and unsecure connections");
 
 opt.option(["-u1", "--uuid-v1"], function (param) {
