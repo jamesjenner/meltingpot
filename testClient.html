@@ -57,20 +57,22 @@
   <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
   <script src="./node_modules/node-uuid/uuid.js"></script>
   <!-- normal usage would be the js installed via bower  -->
+<!-- uncomment the following when using meltingpot as a node module
   <script src="./bower_components/meltingpot/shared/message.js"></script>
   <script src="./bower_components/meltingpot/server.js"></script>
-<!-- uncomment the following and comment out the above if cloning the meltingpot repository -->
-<!-- uncomment the following and comment out the above if cloning the meltingpot repository
+-->
+<!-- comment the following and uncomment the above if using meltingpot as a node module -->
   <script src="./shared/message.js"></script>
   <script src="./server.js"></script>
--->
   <script src="./shared/panel.js"></script>
+  
   <script>
     
     $("#addPanel").on("click", addPanel);
     $("#retreivePanels").on("click", retreivePanels);
     
     var server = new Server({
+      autoReconnect: true,
       messageHandlers: [
         processPanelMessages,
       ]
