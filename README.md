@@ -18,9 +18,12 @@ communications and the framework to support the server.
 
 ##Quick Start
 
-- Clone the repository: `git clone https://github.com/jamesjenner/meltingpot.git`
 - Install client dependancies via [Bower](http://bower.io): `bower install meltingpot`
 - Install server via [NPM](http://www.npmjs.org/): `npm install meltingpot`
+
+OR 
+
+- Clone the repository: `git clone https://github.com/jamesjenner/meltingpot.git`
 
 ##Usage
 
@@ -30,14 +33,41 @@ To extend the protocol refer to `shared/panel.js` and `panelHandler.js` examples
 
 ##Key Components
 
-* testClient.html - an exmaple web client
-* application.js - an example node.js server
+Client side:
+
+* testClient.html - an exmaple web client, presumption is bower and npm used to install packages
 * panelHandler.js - an example protocol handler extension for the server (defines server logic for the entity)
 * shared/panel.js - an example protocol extension
 * server.js - javascript lib for the web client to connect to the server
 * shared/message.js  - javascript protocol lib shared between client and server 
 
-##Dependancies
+Server side:
+
+* application.js - an example node.js server
+* meltingpot.js - node js module, exposes comms.js and shared/message.js
+
+##Example
+
+Use `application.js` to run an example server, meltingpot and associated dependancies will need to be installed via `npm`. 
+
+To run the example application use the following:
+
+    node application.js --debug
+
+Use `testClient.html` to run an example client, meltingpot will need to be installed via `bower`. 
+In addition, the following files will be required:
+
+* panelHandler.js
+* shared/panel.js
+
+Open `testClient.html` in a browser to run the client. When it first runs it will attempt to connect to the server on the localhost.
+If the server is running, then you can choose the buttons to send messages back and forth to the server.
+
+The example will create `panels.json` file in the same directory that `application.js` is running. The add and delete buttons in the client
+will result in updates to the `panels.json` file by the server.
+Closing and reopening the `testClient.html` will reconnect to the server and retreive whatever information is within the `panels.json` file.
+
+##Node Dependancies
 
 * opt `npm install opt`
 * websocket `npm install websocket`
@@ -69,6 +99,10 @@ To install all dependancies, use the following command that is appropriate.
 * Move User logic into seperate js (currently in comms.js)
 * Investigate breaking up comms.js
 * Add logic for update to the panel example
+
+##History
+
+19 July 2015: Added auto reconnect option to server.js. The client will automatically connect/reconnect when set to true.
 
 ##License (MIT)
 
