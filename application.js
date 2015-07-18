@@ -28,7 +28,12 @@ var path = require('path');
 var opt = require('opt').create();
 var fs = require('fs');
 
-var MeltingPot = require('meltingpot');
+// use the following if meltingpot is a node module
+// var MeltingPot = require('meltingpot');
+
+// the following is for the meltingpot git project
+var MeltingPot = require('./meltingpot.js');
+
 var Message = MeltingPot.Message;
 var Comms = MeltingPot.Comms;
 
