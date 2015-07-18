@@ -59,14 +59,13 @@ var Server = function (options) {
   this.disconnectionListener = options.disconnectionListener || function () {};
   this.errorListener = options.errorListener || function () {};
 
+  this.autoReconnect = (options.autoReconnect !== null && options.autoReconnect !== undefined) ? options.autoReconnect : false;
+  this.retryDelay = (options.retryDelay !== null && options.retryDelay !== undefined) ? options.retryDelay : 500;
+  
   this.messageHandlers = (options.messageHandlers !== null && options.messageHandlers !== undefined) ? options.messageHandlers : [];
   
-//  this.rcvdAddPanel = options.rcvdAddPanel || this.rcvdUnsupportedMessage;
-//  this.rcvdPanels = options.rcvdPanels || this.rcvdUnsupportedMessage;
-//  this.rcvdDeletePanel = options.rcvdDeletePanel || this.rcvdUnsupportedMessage;
-//  this.rcvdUpdatePanel = options.rcvdUpdatePanel || this.rcvdUnsupportedMessage;
-
   this.log = options.log || false;
+  this.manualDisconnect = false;
 
   this.unsecureConnection = {};
   this.secureConnection = {};
@@ -159,7 +158,10 @@ Server.prototype.connectUnsecure = function () {
   }
 };
 
-Server.prototype.disconnect = function () {
+Server.prototype.disconnect = function (reconnect) {
+  this.manualReconnect = (reconnect !== null && reconnect !== undefined) ? reconnect : false;
+  this.manualDisconnect = true;
+  
   if (this.unsecureConnected) {
     this.unsecureConnection.close();
   }
@@ -229,6 +231,13 @@ Server.prototype.closeSecureEvent = function (event) {
   // TODO: if a pure unsecure connection is allowed in the future, then this event will need to be fired from the close unsecure event 
   this.isConnected = false;
   this.disconnectionListener(event, this);
+  
+  if((this.manualReconnect && this.manualDisconnect) || this.autoReconnect) {
+    setTimeout(function() { 
+      this.connect();
+    }.bind(this), this.retryDelay);
+  }
+  this.manualDisconnect = false;
 };
 
 Server.prototype.closeUnsecureEvent = function (event) {
@@ -247,6 +256,13 @@ Server.prototype.closeUnsecureEvent = function (event) {
     this.isConnected = false;
     this.disconnectionListener(event, this);
   }
+
+  if((this.manualReconnect && this.manualDisconnect) || this.autoReconnect) {
+    setTimeout(function() { 
+      this.connect();
+    }.bind(this), this.retryDelay);
+  }
+  this.manualDisconnect = false;
 };
 
 Server.prototype.messageEvent = function (event) {
@@ -299,22 +315,6 @@ Server.prototype.messageEvent = function (event) {
       this.isConnected = true;
       this.connectionListener(event);
       break;
-
-//    case Message.PANELS:
-//      this.rcvdPanels(this, msg.body);
-//      break;
-//
-//    case Message.ADD_PANEL:
-//      this.rcvdAddPanel(this, new Panel(msg.body));
-//      break;
-//
-//    case Message.DELETE_PANEL:
-//      this.rcvdDeletePanel(this, new Panel(msg.body));
-//      break;
-//
-//    case Message.UPDATE_PANEL:
-//      this.rcvdUpdatePanel(this, new Panel(msg.body));
-//      break;
 
     default:
         if(!this._processMessageHandlers(msg.id, msg.body)) {
