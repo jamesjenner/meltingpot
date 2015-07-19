@@ -1,4 +1,4 @@
-##The Melting Pot version 0.0.1
+##The Melting Pot
 An application template with the following components:
 
 * html based front end
